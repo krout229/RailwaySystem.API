@@ -14,19 +14,19 @@ namespace RailwaySystem.API.Services
         {
             _Istation = Istation;
         }
-        public string SaveStation(Station station)
+        public string SaveStation(Route station)
         {
             return _Istation.SaveStation(station);
         }
-        public string UpdateStation(Station station)
+        public string UpdateStation(Route station)
         {
             return _Istation.UpdateStation(station);
         }
-        public Station GetStation(int StationId)
+        public Route GetStation(int StationId)
         {
             return _Istation.GetStation(StationId);
         }
-        public List<Station> GetAllStations()
+        public List<Route> GetAllStations()
         {
             return _Istation.GetAllStations();
         }

@@ -2,7 +2,7 @@
 
 namespace RailwaySystem.API.Migrations
 {
-    public partial class Time : Migration
+    public partial class Final2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

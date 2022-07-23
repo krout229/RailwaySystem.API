@@ -12,9 +12,11 @@ namespace RailwaySystem.API.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuotaId { get; set; }
+
         [Column(TypeName ="varchar(50)")]
         public string type { get; set; }
         public int Percentage { get; set; }
         public bool isActive { get; set; }
+        public ICollection<Booking> _booking { get; set; }
     }
 }

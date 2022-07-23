@@ -11,10 +11,20 @@ namespace RailwaySystem.API.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SeatsId { get; set; }
+        [Required(ErrorMessage = "ID will be automatically generated")]
+        public int SeatId { get; set; }
+
+        [Required(ErrorMessage = "Enter the number of seats for First AC")]
         public int FirstAC { get; set; }
+
+        [Required(ErrorMessage = "Enter the number of seats for Second AC")]
         public int SecondAC { get; set; }
+
+        [Required(ErrorMessage = "Enter the number of seats for Sleeper")]
         public int Sleeper { get; set; }
-        public int total { get; set; }
+
+        [Required(ErrorMessage = "Enter the total number of seats ")]
+        public int Total { get; set; }
+        public ICollection<Train> trains {get;set;}
     }
 }

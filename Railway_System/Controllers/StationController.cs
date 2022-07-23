@@ -19,12 +19,12 @@ namespace RailwaySystem.API.Controllers
             _stationS = stationS;
         }
         [HttpPost("SaveStation")]
-        public IActionResult SaveStation(Station station)
+        public IActionResult SaveStation(Route station)
         {
             return Ok(_stationS.SaveStation(station));
         }
         [HttpPut("UpdateStation")]
-        public IActionResult UpdateStation(Station station)
+        public IActionResult UpdateStation(Route station)
         {
             return Ok(_stationS.UpdateStation(station));
         }
@@ -35,7 +35,7 @@ namespace RailwaySystem.API.Controllers
         }
 
         [HttpGet("GetAllStations")]
-        public List<Station> GetAllStationss()
+        public List<Route> GetAllStationss()
         {
             return _stationS.GetAllStations();
         }

@@ -29,7 +29,7 @@ namespace RailwaySystem.API.Repository
 
             try
             {
-                delete = _trainDb.trainsDb.Find(TrainId);
+                delete = _trainDb.trains.Find(TrainId);
 
                 if (delete != null)
                 {
@@ -62,7 +62,8 @@ namespace RailwaySystem.API.Repository
             List<Train> trains = null;
             try
             {
-                trains = _trainDb.trainsDb.ToList();
+                trains = _trainDb.trains.ToList();
+                return trains;
 
             }
             catch (Exception ex)
@@ -84,7 +85,7 @@ namespace RailwaySystem.API.Repository
             Train train = null;
             try
             {
-                train = _trainDb.trainsDb.Find(TrainId);
+                train = _trainDb.trains.Find(TrainId);
             }
             catch (Exception ex)
             {
@@ -103,16 +104,18 @@ namespace RailwaySystem.API.Repository
         public string SaveTrain(Train train)
         {
             string stCode = string.Empty;
-            try
-            {
-                _trainDb.trainsDb.Add(train);
+            //try
+            //{
+                _trainDb.trains.Add(train);
                 _trainDb.SaveChanges();
+                
                 stCode = "200";
-            }
-            catch (Exception ex)
-            {
-                stCode = "400";
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return ex.Message;
+            //    stCode = "400";
+            //}
             return stCode;
         }
         #endregion

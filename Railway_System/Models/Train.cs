@@ -13,8 +13,7 @@ namespace RailwaySystem.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TrainId { get; set; }
 
-
-        [ForeignKey("Seats")]
+        [ForeignKey("total")]
         public int total { get; set; }
 
 
@@ -22,8 +21,6 @@ namespace RailwaySystem.API.Models
         [Required(ErrorMessage = "Train name can not be empty")]
         [MinLength(5, ErrorMessage = "Train name can not be less than 5")]
         public string Name { get; set; }
-
-
 
         public DateTime ArrivalTime { get; set; }
 
@@ -38,12 +35,9 @@ namespace RailwaySystem.API.Models
         [Required(ErrorMessage = "MM/DD/YYYY Format")]
         public DateTime DepartureDate { get; set; }
 
-        [ForeignKey("Station")]
-        public int ArrivalStation { get; set; }
-
-
-        [ForeignKey("Station")]
-        public int DepartureStation { get; set; }
+       
         public bool isActive { get; set; }
+        public ICollection<Route> routes { get; set; }
+        //public ICollection<Booking> bookings { get; set; }
     }
 }

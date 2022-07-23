@@ -11,12 +11,21 @@ namespace RailwaySystem.API.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BankId { get; set; }
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+        [Required(ErrorMessage = "ID will be automatically generated")]
+        public int BankCredId { get; set; }
+
+        [Required(ErrorMessage = "Enter the User ID")]
+        [ForeignKey("UserId")]
+        public int? UserId { get; set; }
+       
+        [Column(TypeName = "varchar(50)")]
+        [Required(ErrorMessage = "The Bank name cannot be empty.")]
         public string BankName { get; set; }
-        //public string CardNum { get; set; }
-        //public string expiryDate { get; set; }
-        //public string CVV { get; set; }
+
+        [MinLength(4,ErrorMessage = "Atleast 4 digits")]
+        [MaxLength(11,ErrorMessage ="Atleast 11 digits")]
+        [Required(ErrorMessage = "Enter the last four digits of you card number.")]
+        public string CardNumber { get; set; }
+        public bool isActive { get; set; }
     }
 }

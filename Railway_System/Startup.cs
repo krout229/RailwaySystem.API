@@ -41,6 +41,11 @@ namespace RailwaySystem.API
             services.AddTransient<StationS, StationS>();
             services.AddTransient<IBooking, BookingRepo>();
             services.AddTransient<BookingS, BookingS>();
+            services.AddTransient<IUser, UserRepo>();
+            services.AddTransient<UserS, UserS>();
+            services.AddTransient<IBankCred, BankCredRepo>();
+            services.AddTransient<BankCredS, BankCredS>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

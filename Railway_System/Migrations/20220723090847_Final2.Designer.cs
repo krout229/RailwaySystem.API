@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwaySystem.API.Data;
 
 namespace RailwaySystem.API.Migrations
 {
     [DbContext(typeof(TrainDbContext))]
-    partial class TrainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220723090847_Final2")]
+    partial class Final2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,6 +92,8 @@ namespace RailwaySystem.API.Migrations
                     b.HasKey("BookingId");
 
                     b.HasIndex("QuotaId");
+
+                    b.HasIndex("TrainId");
 
                     b.ToTable("bookings");
                 });
@@ -319,6 +323,10 @@ namespace RailwaySystem.API.Migrations
                     b.HasOne("RailwaySystem.API.Models.Quota", null)
                         .WithMany("_booking")
                         .HasForeignKey("QuotaId");
+
+                    b.HasOne("RailwaySystem.API.Models.Train", null)
+                        .WithMany("bookings")
+                        .HasForeignKey("TrainId");
                 });
 
             modelBuilder.Entity("RailwaySystem.API.Models.Route", b =>
@@ -372,6 +380,8 @@ namespace RailwaySystem.API.Migrations
 
             modelBuilder.Entity("RailwaySystem.API.Models.Train", b =>
                 {
+                    b.Navigation("bookings");
+
                     b.Navigation("routes");
                 });
 

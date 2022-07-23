@@ -20,12 +20,12 @@ namespace RailwaySystem.API.Repository
         /// When this fuction is invoked we get all stations
         /// </summary>
         /// <returns>List of all the stations</returns>
-        public List<Station> GetAllStations()
+        public List<Route> GetAllStations()
         {
-            List<Station> stations = null;
+            List<Route> stations = null;
             try
             {
-                stations = _trainDb.station.ToList();
+                stations = _trainDb.route.ToList();
             }
             catch (Exception ex)
             {
@@ -41,29 +41,29 @@ namespace RailwaySystem.API.Repository
         /// </summary>
         /// <param name="StationId"></param>
         /// <returns></returns>
-        public Station GetStation(int StationId)
+        public Route GetStation(int RouteId)
         {
-            Station station = null;
+            Route route = null;
             try
             {
-                station = _trainDb.station.Find(StationId);
+                route = _trainDb.route.Find(RouteId);
             }
             catch (Exception ex)
             {
 
             }
-            return station;
+            return route;
            
         }
         #endregion
 
         #region Save Station
-        public string SaveStation(Station station)
+        public string SaveStation(Route route)
         {
             string stCode = string.Empty;
             try
             {
-                _trainDb.station.Add(station);
+                _trainDb.route.Add(route);
                 _trainDb.SaveChanges();
                 stCode = "200";
             }
@@ -77,12 +77,12 @@ namespace RailwaySystem.API.Repository
         #endregion
 
         #region Update Station
-        public string UpdateStation(Station station)
+        public string UpdateStation(Route route)
         {
             string stCode = string.Empty;
             try
             {
-                _trainDb.Entry(station).State = EntityState.Modified;
+                _trainDb.Entry(route).State = EntityState.Modified;
                 _trainDb.SaveChanges();
                 stCode = "200";
             }
@@ -92,6 +92,39 @@ namespace RailwaySystem.API.Repository
             }
             return stCode;
            
+        }
+        #endregion
+
+        #region Deact Route
+       
+
+        public string DeactStation(int RouteId)
+        {
+            string Result = string.Empty;
+            Route delete;
+
+            try
+            {
+                delete = _trainDb.route.Find(RouteId);
+
+
+                if (delete != null)
+                {
+                    //_TicketDb.TicketsDb.Remove(delete);
+                    delete.isActive = false;
+                    _trainDb.SaveChanges();
+                    Result = "200";
+                }
+            }
+            catch (Exception ex)
+            {
+                Result = "400";
+            }
+            finally
+            {
+                delete = null;
+            }
+            return Result;
         }
         #endregion
     }

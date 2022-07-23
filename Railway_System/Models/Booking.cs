@@ -12,19 +12,22 @@ namespace RailwaySystem.API.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingId { get; set; }
-        [ForeignKey("Train")]
-        public int TrainId { get; set; }
-        [ForeignKey("Quota")]
-        public string QuotaId { get; set; }
+
+        [ForeignKey("TrainId")]
+        public int? TrainId { get; set; }
+        
+
+        [ForeignKey("QuotaId")]
+        public int? QuotaId { get; set; }
+        
+      
         public string Classes { get; set; }
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "MM/DD/YYYY Format")]
         public DateTime Date { get; set; }
 
-        [DataType(DataType.Time)]
-        [Required(ErrorMessage = "hh:mm Format")]
-        public DateTime Time { get; set; }
+      
         public string Status { get; set; }
         public int SeatNum { get; set; }
         [Column(TypeName = "varchar(25)")]
@@ -35,5 +38,6 @@ namespace RailwaySystem.API.Models
         [Required(ErrorMessage = "Gender can not be empty")]
         public string Gender { get; set; }
         public bool isActive { get; set; }
+        public ICollection<Transaction> transactions { get; set; }
     }
 }

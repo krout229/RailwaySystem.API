@@ -8,54 +8,55 @@ using System.Threading.Tasks;
 
 namespace RailwaySystem.API.Repository
 {
-    public class SeatRepo:ISeat
+    public class TransactionRepo:ITransaction
     {
         private TrainDbContext _trainDb;
 
-        public SeatRepo(TrainDbContext trainDb)
+        public TransactionRepo(TrainDbContext trainDb)
         {
             _trainDb = trainDb;
         }
 
-        #region GetAllSeats
-        public List<Seat> GetAllSeats()
+        #region GetAllTransactions
+        public List<Transaction> GetAllTransaction()
         {
-            List<Seat> seat = null;
+            List<Transaction> transactions = null;
             try
             {
-                seat = _trainDb.seat.ToList();
+                transactions = _trainDb.transaction.ToList();
 
             }
             catch (Exception ex)
             {
 
             }
-            return seat;
+            return transactions;
         }
+
         #endregion
 
-        #region GetSeat
-        public Seat GetSeat(int SeatId)
+        #region GetTransaction
+        public Transaction GetTransaction(int TransactionId)
         {
-            Seat seat = null;
+            Transaction transaction = null;
             try
             {
-                seat = _trainDb.seat.Find(SeatId);
+                transaction = _trainDb.transaction.Find(TransactionId);
             }
             catch (Exception ex)
             {
 
             }
-            return seat;
+            return transaction;
         }
         #endregion
 
-        #region SaveSeat
-        public string SaveSeat(Seat seat)
+        #region SaveTransaction
+        public string SaveTransaction(Transaction transaction)
         {
             try
             {
-                _trainDb.seat.Add(seat);
+                _trainDb.transaction.Add(transaction);
                 _trainDb.SaveChanges();
             }
             catch (Exception ex)
@@ -67,12 +68,12 @@ namespace RailwaySystem.API.Repository
         }
         #endregion
 
-        #region UpdateSeat
-        public string UpdateSeat(Seat seat)
+        #region UpdateTransaction
+        public string UpdateTransaction(Transaction transaction)
         {
             try
             {
-                _trainDb.Entry(seat).State = EntityState.Modified;
+                _trainDb.Entry(transaction).State = EntityState.Modified;
                 _trainDb.SaveChanges();
             }
             catch (Exception ex)
@@ -83,5 +84,6 @@ namespace RailwaySystem.API.Repository
             return "Updated";
         }
         #endregion
+
     }
 }

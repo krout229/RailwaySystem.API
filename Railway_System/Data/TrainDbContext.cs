@@ -13,10 +13,14 @@ namespace RailwaySystem.API.Data
         {
 
         }
-        public DbSet<Train> trainsDb { get; set; }
-        public DbSet<Station> station { get; set; }
+        public DbSet<Train> trains { get; set; }
+        public DbSet<Route> route { get; set; }
         public DbSet<Quota> quotas { get; set; }
         public DbSet<Booking> bookings { get; set; }
         public DbSet<Tickets> tickets { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<Seat> seat { get; set; }
+        public DbSet<BankCred> bankCred { get; set; }
+        public DbSet<Transaction> transaction { get; set; }
     }
 }

@@ -8,9 +8,10 @@ namespace RailwaySystem.API.Repository
 {
    public interface IStation
     {
-        public string SaveStation(Station station);
-        public string UpdateStation(Station station);
-        Station GetStation(int StationId);
-        List<Station> GetAllStations();
+        public string SaveStation(Route route);
+        public string UpdateStation(Route route);
+        public string DeactStation(int RouteId);
+        Route GetStation(int RouteId);
+        List<Route> GetAllStations();
     }
 }
