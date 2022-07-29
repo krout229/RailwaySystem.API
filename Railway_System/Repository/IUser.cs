@@ -11,6 +11,7 @@ namespace RailwaySystem.API.Repository
         public string SaveUser(User user);
         public string UpdateUser(User user);
         User GetUser(int UserId);
+        User GetUserbyEmail(string Email);
         List<User> GetAllUser();
     }
 }

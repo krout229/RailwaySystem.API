@@ -13,11 +13,11 @@ namespace RailwaySystem.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingId { get; set; }
 
-        [ForeignKey("TrainId")]
+        [ForeignKey("TrainId"), Column(Order = 0)]
         public int? TrainId { get; set; }
         
 
-        [ForeignKey("QuotaId")]
+        [ForeignKey("QuotaId"), Column(Order = 1)]
         public int? QuotaId { get; set; }
         
       

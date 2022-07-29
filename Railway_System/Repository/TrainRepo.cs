@@ -2,6 +2,7 @@
 using RailwaySystem.API.Data;
 using RailwaySystem.API.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -104,18 +105,18 @@ namespace RailwaySystem.API.Repository
         public string SaveTrain(Train train)
         {
             string stCode = string.Empty;
-            //try
-            //{
+            try
+            {
                 _trainDb.trains.Add(train);
                 _trainDb.SaveChanges();
-                
+
                 stCode = "200";
-            //}
-            //catch (Exception ex)
-            //{
-            //    return ex.Message;
-            //    stCode = "400";
-            //}
+            }
+            catch (Exception ex)
+            {
+                //return ex.Message;
+                stCode = "400";
+            }
             return stCode;
         }
         #endregion
@@ -129,19 +130,53 @@ namespace RailwaySystem.API.Repository
         public string UpdateTrain(Train train)
         {
             string stCode = string.Empty;
+
             try
             {
+
                 _trainDb.Entry(train).State = EntityState.Modified;
                 _trainDb.SaveChanges();
-                stCode = "200";
+                //stCode = "200";
+
             }
-            catch
+            catch (Exception ex)
             {
                 stCode = "400";
             }
             return stCode;
 
+
+        }
+        #endregion
+
+        #region Search Train
+        /// <summary>
+        /// Search for trains
+        /// </summary>
+        /// <param name="ArrivalStation"></param>
+        /// <param name="DepartureStation"></param>
+        /// <param name="date"></param>
+        /// <returns>List with thr arguments matched</returns>
+        public List<Train> SearchTrain(string ArrivalStation, string DepartureStation, DateTime date)
+        {
+            List<Train> trains = null;
+            var searchTrain = _trainDb.trains.Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.ArrivalDate == date);
+            try {
+                if (searchTrain != null)
+                {
+
+                    trains = searchTrain.ToList<Train>();
+                    return trains;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return trains;
+
         }
         #endregion
     }
 }
+

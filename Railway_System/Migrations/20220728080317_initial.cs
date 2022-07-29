@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RailwaySystem.API.Migrations
 {
-    public partial class Final : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,19 +23,21 @@ namespace RailwaySystem.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "seat",
+                name: "trains",
                 columns: table => new
                 {
-                    SeatId = table.Column<int>(type: "int", nullable: false)
+                    TrainId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstAC = table.Column<int>(type: "int", nullable: false),
-                    SecondAC = table.Column<int>(type: "int", nullable: false),
-                    Sleeper = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "varchar(25)", nullable: false),
+                    ArrivalTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartureTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_seat", x => x.SeatId);
+                    table.PrimaryKey("PK_trains", x => x.TrainId);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,54 +57,6 @@ namespace RailwaySystem.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_users", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "trains",
-                columns: table => new
-                {
-                    TrainId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    total = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "varchar(25)", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DepartureTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false),
-                    SeatId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_trains", x => x.TrainId);
-                    table.ForeignKey(
-                        name: "FK_trains_seat_SeatId",
-                        column: x => x.SeatId,
-                        principalTable: "seat",
-                        principalColumn: "SeatId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "bankCred",
-                columns: table => new
-                {
-                    BankCredId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    BankName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    CardNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_bankCred", x => x.BankCredId);
-                    table.ForeignKey(
-                        name: "FK_bankCred_users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,12 +85,6 @@ namespace RailwaySystem.API.Migrations
                         principalTable: "quotas",
                         principalColumn: "QuotaId",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_bookings_trains_TrainId",
-                        column: x => x.TrainId,
-                        principalTable: "trains",
-                        principalColumn: "TrainId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,7 +93,7 @@ namespace RailwaySystem.API.Migrations
                 {
                     RouteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainId = table.Column<int>(type: "int", nullable: false),
+                    TrainId = table.Column<int>(type: "int", nullable: true),
                     ArrivalStation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartureStation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     date = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -160,6 +108,51 @@ namespace RailwaySystem.API.Migrations
                         column: x => x.TrainId,
                         principalTable: "trains",
                         principalColumn: "TrainId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "seat",
+                columns: table => new
+                {
+                    SeatId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainId = table.Column<int>(type: "int", nullable: false),
+                    FirstAC = table.Column<int>(type: "int", nullable: false),
+                    SecondAC = table.Column<int>(type: "int", nullable: false),
+                    Sleeper = table.Column<int>(type: "int", nullable: false),
+                    Total = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_seat", x => x.SeatId);
+                    table.ForeignKey(
+                        name: "FK_seat_trains_TrainId",
+                        column: x => x.TrainId,
+                        principalTable: "trains",
+                        principalColumn: "TrainId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "bankCred",
+                columns: table => new
+                {
+                    BankCredId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    BankName = table.Column<string>(type: "varchar(50)", nullable: false),
+                    CardNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bankCred", x => x.BankCredId);
+                    table.ForeignKey(
+                        name: "FK_bankCred_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -190,7 +183,6 @@ namespace RailwaySystem.API.Migrations
                 {
                     TicketId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
                     TransId = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -206,12 +198,6 @@ namespace RailwaySystem.API.Migrations
                         principalTable: "transaction",
                         principalColumn: "TransactionId",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_tickets_users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -225,29 +211,19 @@ namespace RailwaySystem.API.Migrations
                 column: "QuotaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_bookings_TrainId",
-                table: "bookings",
+                name: "IX_route_TrainId",
+                table: "route",
                 column: "TrainId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_route_TrainId",
-                table: "route",
+                name: "IX_seat_TrainId",
+                table: "seat",
                 column: "TrainId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tickets_TransactionId",
                 table: "tickets",
                 column: "TransactionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tickets_UserId",
-                table: "tickets",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trains_SeatId",
-                table: "trains",
-                column: "SeatId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_transaction_BookingId",
@@ -264,25 +240,25 @@ namespace RailwaySystem.API.Migrations
                 name: "route");
 
             migrationBuilder.DropTable(
+                name: "seat");
+
+            migrationBuilder.DropTable(
                 name: "tickets");
 
             migrationBuilder.DropTable(
-                name: "transaction");
+                name: "users");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "trains");
+
+            migrationBuilder.DropTable(
+                name: "transaction");
 
             migrationBuilder.DropTable(
                 name: "bookings");
 
             migrationBuilder.DropTable(
                 name: "quotas");
-
-            migrationBuilder.DropTable(
-                name: "trains");
-
-            migrationBuilder.DropTable(
-                name: "seat");
         }
     }
 }

@@ -44,5 +44,10 @@ namespace RailwaySystem.API.Controllers
         {
             return trainS.GetAllTrains();
         }
+        [HttpGet("SearchTrain")]
+        public List<Train> SearchTrain(string ArrivalStation, string DepartureStation, DateTime date)
+        {
+            return trainS.SearchTrain(ArrivalStation, DepartureStation, date);
+        }
     }
 }

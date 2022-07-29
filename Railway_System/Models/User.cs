@@ -39,6 +39,6 @@ namespace RailwaySystem.API.Models
 
         public bool IsActive { get; set; }
         public ICollection<BankCred>bankCreds { get; set; }
-        public ICollection<Tickets> tickets { get; set; }
+       
     }
 }

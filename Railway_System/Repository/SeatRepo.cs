@@ -53,15 +53,19 @@ namespace RailwaySystem.API.Repository
         #region SaveSeat
         public string SaveSeat(Seat seat)
         {
-            try
-            {
+            //string result = string.Empty;
+            //try
+            //{
                 _trainDb.seat.Add(seat);
                 _trainDb.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-
-            }
+                
+                //result = "200";
+            //}
+            //catch (Exception ex)
+            //{
+            //    return ex.Message;
+               
+            //}
 
             return "Saved";
         }

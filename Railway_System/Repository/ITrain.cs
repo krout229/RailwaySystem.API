@@ -13,5 +13,7 @@ namespace RailwaySystem.API.Repository
         public string DeleteTrain(int TrainId);
         Train GetTrain(int TrainId);
         List<Train> GetAllTrains();
+        public List<Train> SearchTrain(string ArrivalStation, string DepartureStation, DateTime date);
+        
     }
 }

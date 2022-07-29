@@ -14,7 +14,7 @@ namespace RailwaySystem.API.Models
         public int RouteId { get; set; }
 
         [ForeignKey("TrainId")]
-        public int TrainId { get; set; }
+        public int? TrainId { get; set; }
        
         public string ArrivalStation { get; set; }
         public string DepartureStation { get; set; }

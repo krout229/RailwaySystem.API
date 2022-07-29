@@ -9,15 +9,10 @@ namespace RailwaySystem.API.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TicketId { get; set; }
-        [ForeignKey("UserId")]
-        public int? UserId { get; set; }
 
 
         [ForeignKey("TransId")]
         public int? TransId { get; set; }
-        
-
-        
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "DD/MM/YYYY Format")]

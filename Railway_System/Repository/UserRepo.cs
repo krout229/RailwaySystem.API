@@ -35,8 +35,25 @@ namespace RailwaySystem.API.Repository
         }
         #endregion
 
-        #region GetUser
+       
 
+        #region Get User By email
+        public User GetUserbyEmail(string Email)
+        {
+            User email = null;
+            try
+            {
+                email = _trainDb.users.FirstOrDefault(q => q.Email == Email);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return email;
+        }
+        #endregion
+
+        #region GetUserById
 
         public User GetUser(int UserId)
         {
@@ -57,34 +74,38 @@ namespace RailwaySystem.API.Repository
         #region SaveUser
         public string SaveUser(User user)
         {
+            string Result = string.Empty;
             try
             {
                 _trainDb.users.Add(user);
                
                 _trainDb.SaveChanges();
+                Result = "200";
             }
             catch (Exception ex)
             {
-
+                Result = "400";
             }
-
-            return "Saved";
+            return Result;
+            
         }
         #endregion
 
         #region UpdateUser
         public string UpdateUser(User user)
         {
+            string Result = string.Empty;
             try
             {
                 _trainDb.Entry(user).State = EntityState.Modified;
                 _trainDb.SaveChanges();
+                Result = "200";
             }
             catch (Exception ex)
             {
-
+                Result = "400";
             }
-            return "Updated";
+            return Result;
         }
         #endregion
     }

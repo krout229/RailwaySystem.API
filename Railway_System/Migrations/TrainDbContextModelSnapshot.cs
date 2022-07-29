@@ -128,7 +128,7 @@ namespace RailwaySystem.API.Migrations
                     b.Property<string>("DepartureStation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TrainId")
+                    b.Property<int?>("TrainId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("date")
@@ -166,7 +166,12 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int>("Total")
                         .HasColumnType("int");
 
+                    b.Property<int>("TrainId")
+                        .HasColumnType("int");
+
                     b.HasKey("SeatId");
+
+                    b.HasIndex("TrainId");
 
                     b.ToTable("seat");
                 });
@@ -190,17 +195,12 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int?>("TransactionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
                     b.HasKey("TicketId");
 
                     b.HasIndex("TransactionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("tickets");
                 });
@@ -215,31 +215,32 @@ namespace RailwaySystem.API.Migrations
                     b.Property<DateTime>("ArrivalDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ArrivalStation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArrivalTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DepartureDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DepartureStation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DepartureTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(25)");
 
-                    b.Property<int?>("SeatId")
-                        .HasColumnType("int");
+                    b.Property<double>("distance")
+                        .HasColumnType("float");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("total")
-                        .HasColumnType("int");
-
                     b.HasKey("TrainId");
-
-                    b.HasIndex("SeatId");
 
                     b.ToTable("trains");
                 });
@@ -325,6 +326,13 @@ namespace RailwaySystem.API.Migrations
                 {
                     b.HasOne("RailwaySystem.API.Models.Train", null)
                         .WithMany("routes")
+                        .HasForeignKey("TrainId");
+                });
+
+            modelBuilder.Entity("RailwaySystem.API.Models.Seat", b =>
+                {
+                    b.HasOne("RailwaySystem.API.Models.Train", null)
+                        .WithMany("seats")
                         .HasForeignKey("TrainId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,17 +343,6 @@ namespace RailwaySystem.API.Migrations
                     b.HasOne("RailwaySystem.API.Models.Transaction", null)
                         .WithMany("tickets")
                         .HasForeignKey("TransactionId");
-
-                    b.HasOne("RailwaySystem.API.Models.User", null)
-                        .WithMany("tickets")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("RailwaySystem.API.Models.Train", b =>
-                {
-                    b.HasOne("RailwaySystem.API.Models.Seat", null)
-                        .WithMany("trains")
-                        .HasForeignKey("SeatId");
                 });
 
             modelBuilder.Entity("RailwaySystem.API.Models.Transaction", b =>
@@ -365,14 +362,11 @@ namespace RailwaySystem.API.Migrations
                     b.Navigation("_booking");
                 });
 
-            modelBuilder.Entity("RailwaySystem.API.Models.Seat", b =>
-                {
-                    b.Navigation("trains");
-                });
-
             modelBuilder.Entity("RailwaySystem.API.Models.Train", b =>
                 {
                     b.Navigation("routes");
+
+                    b.Navigation("seats");
                 });
 
             modelBuilder.Entity("RailwaySystem.API.Models.Transaction", b =>
@@ -383,8 +377,6 @@ namespace RailwaySystem.API.Migrations
             modelBuilder.Entity("RailwaySystem.API.Models.User", b =>
                 {
                     b.Navigation("bankCreds");
-
-                    b.Navigation("tickets");
                 });
 #pragma warning restore 612, 618
         }
