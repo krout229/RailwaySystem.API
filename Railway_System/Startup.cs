@@ -69,8 +69,8 @@ namespace RailwaySystem.API
             services.AddTransient<TicketS, TicketS>();
             services.AddTransient<IQuota, QuotaRepo>();
             services.AddTransient<QuotaS, QuotaS>();
-            services.AddTransient<IStation, StationRepo>();
-            services.AddTransient<StationS, StationS>();
+            services.AddTransient<IPassenger, PassengerRepo>();
+            services.AddTransient<PassengerS, PassengerS>();
             services.AddTransient<IBooking, BookingRepo>();
             services.AddTransient<BookingS, BookingS>();
             services.AddTransient<IUser, UserRepo>();
@@ -79,6 +79,8 @@ namespace RailwaySystem.API
             services.AddTransient<BankCredS, BankCredS>();
             services.AddTransient<ISeat, SeatRepo>();
             services.AddTransient<SeatS, SeatS>();
+            services.AddTransient<ITransaction, TransactionRepo>();
+            services.AddTransient<TransactionS, TransactionS>();
             #endregion
 
             services.AddCors();

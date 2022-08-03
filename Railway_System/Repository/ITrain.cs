@@ -14,6 +14,7 @@ namespace RailwaySystem.API.Repository
         Train GetTrain(int TrainId);
         List<Train> GetAllTrains();
         public List<Train> SearchTrain(string ArrivalStation, string DepartureStation, DateTime date);
-        
+        public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date);
+        public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date);
     }
 }

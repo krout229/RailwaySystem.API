@@ -28,6 +28,7 @@ namespace RailwaySystem.API.Models
 
         [Required(ErrorMessage = "Enter the total number of seats ")]
         public int Total { get; set; }
+        ICollection<Quota> quotas { get; set; }
        
     }
 }

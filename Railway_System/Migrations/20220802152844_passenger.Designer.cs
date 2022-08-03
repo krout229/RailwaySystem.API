@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwaySystem.API.Data;
 
 namespace RailwaySystem.API.Migrations
 {
     [DbContext(typeof(TrainDbContext))]
-    partial class TrainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220802152844_passenger")]
+    partial class passenger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,16 +58,26 @@ namespace RailwaySystem.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
                     b.Property<string>("Classes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PassengerId")
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PName")
+                        .HasColumnType("varchar(25)");
+
+                    b.Property<int?>("QuotaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatId")
+                    b.Property<int>("SeatNum")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -74,10 +86,12 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int?>("TrainId")
                         .HasColumnType("int");
 
-                    b.Property<string>("bookingStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("QuotaId");
 
                     b.HasIndex("TrainId");
 
@@ -118,15 +132,11 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int>("Percentage")
                         .HasColumnType("int");
 
-                    b.Property<string>("SeatId")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("type")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("QuotaId");
 
@@ -303,6 +313,10 @@ namespace RailwaySystem.API.Migrations
 
             modelBuilder.Entity("RailwaySystem.API.Models.Booking", b =>
                 {
+                    b.HasOne("RailwaySystem.API.Models.Quota", null)
+                        .WithMany("_booking")
+                        .HasForeignKey("QuotaId");
+
                     b.HasOne("RailwaySystem.API.Models.Train", null)
                         .WithMany("bookings")
                         .HasForeignKey("TrainId");
@@ -334,6 +348,11 @@ namespace RailwaySystem.API.Migrations
             modelBuilder.Entity("RailwaySystem.API.Models.Booking", b =>
                 {
                     b.Navigation("transactions");
+                });
+
+            modelBuilder.Entity("RailwaySystem.API.Models.Quota", b =>
+                {
+                    b.Navigation("_booking");
                 });
 
             modelBuilder.Entity("RailwaySystem.API.Models.Train", b =>

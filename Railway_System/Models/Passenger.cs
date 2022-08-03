@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace RailwaySystem.API.Models
 {
-    public class Quota
+    public class Passenger
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int QuotaId { get; set; }
+        public int PassengerId { get; set; }
+        public int UserId { get; set; }
 
-        [Column(TypeName ="varchar(50)")]
-        [ForeignKey("SeatId")]
-        public int SeatId { get; set; }
+        public string PName { get; set; }
 
-        public string type { get; set; }
-        public int Percentage { get; set; }
-        public bool isActive { get; set; }
-        
+        public int Age { get; set; }
+        public string gender { get; set; }
+
+
     }
 }

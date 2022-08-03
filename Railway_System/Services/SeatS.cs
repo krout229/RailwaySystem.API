@@ -18,9 +18,9 @@ namespace RailwaySystem.API.Services
         {
             return _seatRepository.SaveSeat(Seat);
         }
-        public string UpdateSeat(Seat seat)
+        public Seat UpdateSeat(int SeatId,Seat seat)
         {
-            return _seatRepository.UpdateSeat(seat);
+            return _seatRepository.UpdateSeat(SeatId,seat);
         }
         public Seat GetSeat(int SeatId)
         {

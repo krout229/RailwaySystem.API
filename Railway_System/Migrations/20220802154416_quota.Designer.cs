@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RailwaySystem.API.Data;
 
 namespace RailwaySystem.API.Migrations
 {
     [DbContext(typeof(TrainDbContext))]
-    partial class TrainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220802154416_quota")]
+    partial class quota
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,16 +58,23 @@ namespace RailwaySystem.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
                     b.Property<string>("Classes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PassengerId")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeatId")
+                    b.Property<string>("PName")
+                        .HasColumnType("varchar(25)");
+
+                    b.Property<int>("SeatNum")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -74,8 +83,8 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int?>("TrainId")
                         .HasColumnType("int");
 
-                    b.Property<string>("bookingStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("BookingId");
 

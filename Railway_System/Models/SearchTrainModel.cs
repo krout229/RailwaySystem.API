@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace RailwaySystem.API.Models
 {
-    public class Train
+    public class SearchTrainModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int TrainId { get; set; }
 
-
+       
 
         [Column(TypeName = "varchar(25)")]
         [Required(ErrorMessage = "Train name can not be empty")]
@@ -38,11 +37,14 @@ namespace RailwaySystem.API.Models
         public string DepartureStation { get; set; }
 
         public double distance { get; set; }
-        public bool isActive { get; set; }
-       
-        public ICollection<Booking> bookings { get; set; }
-        public ICollection<Seat> seats { get; set; }
+      
+        public int FirstAC { get; set; }
 
-        
+        [Required(ErrorMessage = "Enter the number of seats for Second AC")]
+        public int SecondAC { get; set; }
+
+        [Required(ErrorMessage = "Enter the number of seats for Sleeper")]
+        public int Sleeper { get; set; }
+        public int Total { get; set; }
     }
 }

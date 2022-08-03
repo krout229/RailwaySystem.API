@@ -24,9 +24,9 @@ namespace RailwaySystem.API.Controllers
             return Ok(_seatServices.SaveSeat(seat));
         }
         [HttpPut("UpdateSeat")]
-        public IActionResult UpdateSeat(Seat seat)
+        public IActionResult UpdateSeat(int SeatId,Seat seat)
         {
-            return Ok(_seatServices.UpdateSeat(seat));
+            return Ok(_seatServices.UpdateSeat(SeatId,seat));
         }
         [HttpGet("GetSeat")]
         public IActionResult GetSeat(int SeatId)

@@ -18,17 +18,17 @@ namespace RailwaySystem.API.Repository
         public string SaveQuota(Quota quota)
         {
             string stCode = string.Empty;
-            try
-            {
+            //try
+            //{
                 _trainDb.quotas.Add(quota);
                 _trainDb.SaveChanges();
-                stCode = "200";
-            }
-            catch
-            {
-                stCode = "400";
-            }
-            return stCode;
+            //    stCode = "200";
+            //}
+            //catch
+            //{
+            //    stCode = "400";
+            //}
+            return "Added";
         }
 
         public string DeactQuota(int QuotaId)

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
+using MimeKit.Text;
 using RailwaySystem.API.Models;
 using RailwaySystem.API.Services;
 using System;
@@ -75,7 +78,30 @@ namespace RailwaySystem.API.Controllers
             {
                 return BadRequest(new { message = "Email or Password is incorrect." });
             }
-            #endregion
         }
+        #endregion
+
+
+        #region EmailService
+       [HttpGet("EmailService")]
+
+        public IActionResult SendEmail(string name, string reciever)
+        {
+            string body = "Hello, " + name + ".Your email id " + reciever + " is succesfully registered with LOCOMOTIVE Railway Services";
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse("system.railwayinfo@gmail.com"));
+            email.To.Add(MailboxAddress.Parse(reciever));
+            email.Subject = "Test WEBAPI Email Sending Service";
+            email.Body = new TextPart(TextFormat.Plain) { Text = body };
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate("system.railwayinfo@gmail.com ", "ruxidhbnmxoyoynz");
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+            return Ok();
+        }
+        #endregion
     }
 }

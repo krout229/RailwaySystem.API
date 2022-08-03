@@ -160,12 +160,12 @@ namespace RailwaySystem.API.Repository
         public List<Train> SearchTrain(string ArrivalStation, string DepartureStation, DateTime date)
         {
             List<Train> trains = null;
-            var searchTrain = _trainDb.trains.Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.ArrivalDate == date);
+            var searchTrain = _trainDb.trains.Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.DepartureDate == date);
             try {
                 if (searchTrain != null)
                 {
 
-                    trains = searchTrain.ToList<Train>();
+                    trains = searchTrain.ToList();
                     return trains;
                 }
             }
@@ -177,6 +177,40 @@ namespace RailwaySystem.API.Repository
 
         }
         #endregion
+
+        public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
+        {
+            List<Train> Result = null;
+            var trains = _trainDb.trains.Include(q => q.seats).Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.DepartureDate == date);
+            if (trains != null) 
+            {
+                Result = trains.ToList();
+                return Result;
+            }
+            return Result;
+        }
+        public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date)
+        {
+            var Result = (from t in _trainDb.trains
+                          join s in _trainDb.seat on t.TrainId equals s.TrainId
+                          select new SearchTrainModel
+                          {
+                              TrainId = t.TrainId,
+                              Name = t.Name,
+                              ArrivalTime = t.ArrivalTime,
+                              DepartureTime = t.DepartureTime,
+                              ArrivalDate = t.ArrivalDate,
+                              DepartureDate = t.DepartureDate,
+                              DepartureStation = t.DepartureStation,
+                              ArrivalStation = t.ArrivalStation,
+                              FirstAC = s.FirstAC,
+                              SecondAC = s.SecondAC,
+                              Sleeper = s.Sleeper,
+                              Total = s.Total
+                          }).ToList().Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.DepartureDate == date);
+            return Result;
+        }
+
     }
 }
 

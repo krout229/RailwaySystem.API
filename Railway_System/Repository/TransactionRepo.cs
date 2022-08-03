@@ -24,7 +24,7 @@ namespace RailwaySystem.API.Repository
             try
             {
                 transactions = _trainDb.transaction.ToList();
-
+                return transactions;
             }
             catch (Exception ex)
             {
@@ -42,6 +42,7 @@ namespace RailwaySystem.API.Repository
             try
             {
                 transaction = _trainDb.transaction.Find(TransactionId);
+                return transaction;
             }
             catch (Exception ex)
             {
@@ -54,15 +55,15 @@ namespace RailwaySystem.API.Repository
         #region SaveTransaction
         public string SaveTransaction(Transaction transaction)
         {
-            try
-            {
+            //try
+            //{
                 _trainDb.transaction.Add(transaction);
                 _trainDb.SaveChanges();
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-            }
+            //}
 
             return "Saved";
         }

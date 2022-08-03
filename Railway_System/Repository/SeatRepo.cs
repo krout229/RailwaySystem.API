@@ -72,19 +72,27 @@ namespace RailwaySystem.API.Repository
         #endregion
 
         #region UpdateSeat
-        public string UpdateSeat(Seat seat)
+        public Seat UpdateSeat(int SeatId,Seat seat)
         {
+            var _seat = _trainDb.seat.FirstOrDefault(n => n.SeatId == SeatId);
             try
             {
-                _trainDb.Entry(seat).State = EntityState.Modified;
-                _trainDb.SaveChanges();
+                if (_seat != null)
+                {
+                    _seat.FirstAC = seat.FirstAC;
+                    _seat.SecondAC = seat.SecondAC;
+                    _seat.Sleeper = seat.Sleeper;
+                    _seat.Total = seat.Total;
+                   
+                    _trainDb.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
 
             }
 
-            return "Updated";
+            return _seat;
         }
         #endregion
     }

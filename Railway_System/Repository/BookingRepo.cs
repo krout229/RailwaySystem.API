@@ -24,7 +24,7 @@ namespace RailwaySystem.API.Repository
                 delete = _trainDb.bookings.Find(BookingId);
                 if(delete!= null)
                 {
-                    delete.isActive = false;
+                    delete.bookingStatus = "CANCELLED";
                     _trainDb.SaveChanges();
                     Result = "200";
                 }

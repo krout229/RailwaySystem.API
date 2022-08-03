@@ -9,7 +9,7 @@ namespace RailwaySystem.API.Repository
     public interface ISeat
     {
         public string SaveSeat(Seat seat);
-        public string UpdateSeat(Seat seat);
+        public Seat UpdateSeat(int SeatId,Seat seat);
         Seat GetSeat(int SeatId);
         List<Seat> GetAllSeats();
     }
