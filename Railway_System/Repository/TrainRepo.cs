@@ -96,6 +96,7 @@ namespace RailwaySystem.API.Repository
         }
         #endregion
 
+      
         #region AddTrain
         /// <summary>
         /// When this function is invoked we can Add a train
@@ -114,12 +115,13 @@ namespace RailwaySystem.API.Repository
             }
             catch (Exception ex)
             {
-                //return ex.Message;
+                return ex.Message;
                 stCode = "400";
             }
             return stCode;
         }
         #endregion
+        
 
         #region UpdateTrain
         /// <summary>
@@ -178,17 +180,7 @@ namespace RailwaySystem.API.Repository
         }
         #endregion
 
-        public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
-        {
-            List<Train> Result = null;
-            var trains = _trainDb.trains.Include(q => q.seats).Where(q => q.ArrivalStation == ArrivalStation && q.DepartureStation == DepartureStation && q.DepartureDate == date);
-            if (trains != null) 
-            {
-                Result = trains.ToList();
-                return Result;
-            }
-            return Result;
-        }
+        
         public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date)
         {
             var Result = (from t in _trainDb.trains
@@ -211,6 +203,8 @@ namespace RailwaySystem.API.Repository
             return Result;
         }
 
+
+        
     }
 }
 

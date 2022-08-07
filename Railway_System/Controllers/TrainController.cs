@@ -50,10 +50,10 @@ namespace RailwaySystem.API.Controllers
             return trainS.SearchTrain(ArrivalStation, DepartureStation, date);
         }
         [HttpGet("SearchTrainsSeat")]
-        public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
-        {
-            return trainS.GetTrains(ArrivalStation, DepartureStation, date);
-        }
+        //public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
+        //{
+        //    return trainS.GetTrains(ArrivalStation, DepartureStation, date);
+        //}
         [HttpGet("SearchTrainsSeat2")]
         public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date)
         {

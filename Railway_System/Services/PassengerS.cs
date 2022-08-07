@@ -14,7 +14,7 @@ namespace RailwaySystem.API.Services
         {
             passenger = _passenger;
         }
-        public string AddPassenger(Passenger Passenger)
+        public Passenger AddPassenger(Passenger Passenger)
         {
             return passenger.AddPassenger(Passenger);
         }
@@ -33,6 +33,10 @@ namespace RailwaySystem.API.Services
         public List<Passenger> GetAllPassengers()
         {
             return passenger.GetAllPassengers();
+        }
+        public IEnumerable<Report> GetReport(int TrainId)
+        {
+            return passenger.GetReport(TrainId);
         }
     }
 }

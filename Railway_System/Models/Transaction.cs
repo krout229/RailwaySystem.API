@@ -13,6 +13,7 @@ namespace RailwaySystem.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "ID will be automatically generated")]
         public int TransactionId { get; set; }
+
         [ForeignKey("BookingId")]
         public int? BookingId { get; set; }
        

@@ -38,10 +38,10 @@ namespace RailwaySystem.API.Services
         {
             return _ITrain.SearchTrain(ArrivalStation, DepartureStation,date);
         }
-        public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
-        {
-            return _ITrain.GetTrains(ArrivalStation, DepartureStation, date);
-        }
+        //public List<Train> GetTrains(string ArrivalStation, string DepartureStation, DateTime date)
+        //{
+        //    return _ITrain.GetTrains(ArrivalStation, DepartureStation, date);
+        //}
         public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date)
         {
             return _ITrain.GetTrains2(ArrivalStation, DepartureStation, date);

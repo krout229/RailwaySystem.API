@@ -16,6 +16,7 @@ namespace RailwaySystem.API.Models
         [ForeignKey("TrainId")]
         public int? TrainId { get; set; }
 
+        public int UserId { get; set; }
         public string Classes { get; set; }
 
         [DataType(DataType.Date)]
@@ -24,13 +25,15 @@ namespace RailwaySystem.API.Models
 
         public string Status { get; set; }
 
-        [ForeignKey("SeatId")]
-        public int SeatId { get; set; }
+        public int SeatNum { get; set; }
         
         [ForeignKey("PassengerId")]
         public int PassengerId { get; set; }
 
-        public string bookingStatus { get; set; }
+       
+
+        [Column(TypeName = "decimal(18,2)")]
+        public double fare { get; set; }
         public ICollection<Transaction> transactions { get; set; }
     }
 }

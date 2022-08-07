@@ -65,7 +65,7 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int>("PassengerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatId")
+                    b.Property<int>("SeatNum")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -74,8 +74,11 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int?>("TrainId")
                         .HasColumnType("int");
 
-                    b.Property<string>("bookingStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("fare")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("BookingId");
 
@@ -93,6 +96,9 @@ namespace RailwaySystem.API.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PName")
                         .HasColumnType("nvarchar(max)");

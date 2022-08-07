@@ -20,7 +20,7 @@ namespace RailwaySystem.API.Services
         {
             _userRepository = userRepository;
         }
-        public string SaveUser(User user)
+        public double SaveUser(User user)
         {
             return _userRepository.SaveUser(user);
         }

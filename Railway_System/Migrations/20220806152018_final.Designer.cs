@@ -10,8 +10,8 @@ using RailwaySystem.API.Data;
 namespace RailwaySystem.API.Migrations
 {
     [DbContext(typeof(TrainDbContext))]
-    [Migration("20220802154416_quota")]
-    partial class quota
+    [Migration("20220806152018_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,21 +58,14 @@ namespace RailwaySystem.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("Classes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PName")
-                        .HasColumnType("varchar(25)");
+                    b.Property<int>("PassengerId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SeatNum")
                         .HasColumnType("int");
@@ -83,8 +76,11 @@ namespace RailwaySystem.API.Migrations
                     b.Property<int?>("TrainId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("fare")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("BookingId");
 
@@ -102,6 +98,9 @@ namespace RailwaySystem.API.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PName")
                         .HasColumnType("nvarchar(max)");

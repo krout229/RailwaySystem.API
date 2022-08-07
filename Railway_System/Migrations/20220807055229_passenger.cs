@@ -2,7 +2,7 @@
 
 namespace RailwaySystem.API.Migrations
 {
-    public partial class passengerKey : Migration
+    public partial class passenger : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

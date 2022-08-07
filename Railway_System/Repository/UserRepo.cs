@@ -72,22 +72,34 @@ namespace RailwaySystem.API.Repository
         #endregion
 
         #region SaveUser
-        public string SaveUser(User user)
+        public double SaveUser(User user)
         {
-            string Result = string.Empty;
+            double message = 0.00;
             try
             {
-                _trainDb.users.Add(user);
-               
-                _trainDb.SaveChanges();
-                Result = "200";
+                User userd = GetUserbyEmail(user.Email);
+                if (userd != null)
+                {
+                    message = 1.00;
+                }
+                else
+                {
+                    _trainDb.users.Add(user);
+
+                    _trainDb.SaveChanges();
+
+                    message = 0.00;
+
+                }
+
+
             }
             catch (Exception ex)
             {
-                Result = "400";
+
             }
-            return Result;
-            
+
+            return message;
         }
         #endregion
 

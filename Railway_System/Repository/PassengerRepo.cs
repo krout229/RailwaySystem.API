@@ -14,7 +14,7 @@ namespace RailwaySystem.API.Repository
         {
             trainDb = _trainDb;
         }
-        public string AddPassenger(Passenger passenger)
+        public Passenger AddPassenger(Passenger passenger)
         {
             string stCode = string.Empty;
             try
@@ -22,14 +22,14 @@ namespace RailwaySystem.API.Repository
                 trainDb.passenger.Add(passenger);
                 trainDb.SaveChanges();
 
-                stCode = "200";
+                return passenger;
             }
             catch (Exception ex)
             {
                 //return ex.Message;
                 stCode = "400";
             }
-            return stCode;
+            return passenger;
         }
 
         public string DeletePassenger(int PassengerId)
@@ -113,5 +113,25 @@ namespace RailwaySystem.API.Repository
             }
             return passengers;
         }
+        public IEnumerable<Report> GetReport(int TrainId)
+        {
+            var Result = (from p in trainDb.passenger
+                          join b in trainDb.bookings on p.PassengerId equals b.PassengerId where b.TrainId==TrainId
+                          select new Report
+                          {
+                              PassengerId = p.PassengerId,
+                              PName = p.PName,
+                              Age = p.Age,
+                              gender = p.gender,
+                              Class=p.Class,
+                              BookingId=b.BookingId,
+                              fare=b.fare,
+                              Date = b.Date,
+                              Status=b.Status,
+                              SeatNum=b.SeatNum
+                          }).ToList();
+            return Result;
+        }
+
     }
 }
