@@ -18,31 +18,15 @@ namespace RailwaySystem.API.Controllers
         {
             ticketS = _ticketS;
         }
-        [HttpPost("SaveTicket")]
-        public IActionResult SaveTicket(Tickets ticket)
+        [HttpGet("SaveTicket")]
+        public IActionResult SaveTicket(int PassengerId, int BookingId, int TrainId)
         {
-            return Ok(ticketS.SaveTicket(ticket));
+            return Ok(ticketS.SaveTicket(PassengerId, BookingId, TrainId));
         }
-        [HttpDelete("DeactTicket")]
-        public IActionResult DeactTicket(int TicketId)
+       [HttpGet("GetTicketModel")]
+        public IEnumerable<TicketModel> GetTicket(int PassengerId, int BookingId, int TrainId)
         {
-            return Ok(ticketS.DeactTicket(TicketId));
-        }
-        [HttpPut("UpdateTicket")]
-        public IActionResult UpdateTicket(Tickets ticket)
-        {
-            return Ok(ticketS.UpdateTicket(ticket));
-        }
-        [HttpGet("GetTicket")]
-        public IActionResult GetTicket(int TicketId)
-        {
-            return Ok(ticketS.GetTicket(TicketId));
-        }
-
-        [HttpGet("GetAllTickets")]
-        public List<Tickets> GetAllTickets()
-        {
-            return ticketS.GetAllTickets();
+            return ticketS.GetTicket(PassengerId, BookingId, TrainId);
         }
     }
 }

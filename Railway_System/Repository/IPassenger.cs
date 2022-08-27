@@ -12,6 +12,7 @@ namespace RailwaySystem.API.Repository
         public Passenger AddPassenger(Passenger passenger);
         public string DeletePassenger(int PassengerId);
         public Passenger GetPassenger(int PassengerId);
+        public IEnumerable<Report> GetReportStat(int TrainId, string Status);
         public IEnumerable<Report> GetReport(int TrainId);
         public List<Passenger> GetAllPassengers();
     }

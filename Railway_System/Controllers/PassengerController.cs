@@ -49,5 +49,10 @@ namespace RailwaySystem.API.Controllers
         {
             return passengerS.GetReport(TrainId);
         }
+        [HttpGet("GetReportStat")]
+        public IEnumerable<Report> GetReportStat(int TrainId,string Status)
+        {
+            return passengerS.GetReportStat(TrainId,Status);
+        }
     }
 }

@@ -10,68 +10,12 @@ namespace RailwaySystem.API.Repository
 {
     public class TicketRepo : ITicket
     {
-        private TrainDbContext _TicketDb;
+        private TrainDbContext trainDb;
         public TicketRepo(TrainDbContext TicketDbContext)
         {
-            _TicketDb = TicketDbContext;
+            trainDb = TicketDbContext;
         }
-        #region DeleteTicket
-        /// <summary>
-        /// Deactivates the Ticket when this fuction is invoked
-        /// </summary>
-        /// <param name="TicketId"></param>
-        /// <returns>If the TicketId is present then isActive is changed to false</returns>
-        public string DeactTicket(int TicketId)
-        {
-
-            string Result = string.Empty;
-            Tickets delete;
-
-            try
-            {
-                delete = _TicketDb.tickets.Find(TicketId);
-
-                if (delete != null)
-                {
-                    //_TicketDb.TicketsDb.Remove(delete);
-                    delete.isActive = false;
-                    _TicketDb.SaveChanges();
-                    Result = "200";
-                }
-            }
-            catch (Exception ex)
-            {
-                Result = "400";
-            }
-            finally
-            {
-                delete = null;
-            }
-            return Result;
-        }
-        #endregion
-
-        #region GetAllTickets
-        /// <summary>
-        /// When the function is invoked we get the list of all Tickets 
-        /// </summary>
-        /// <returns>List of Ticket</returns>
-        public List<Tickets> GetAllTickets()
-        {
-            string Result = string.Empty;
-            List<Tickets> Tickets = null;
-            try
-            {
-                Tickets = _TicketDb.tickets.ToList();
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return Tickets;
-        }
-        #endregion
+       
 
         #region GetTicket
         /// <summary>
@@ -79,18 +23,38 @@ namespace RailwaySystem.API.Repository
         /// </summary>
         /// <param name="TicketId"></param>
         /// <returns>Finds the Id of the Ticket</returns>
-        public Tickets GetTicket(int TicketId)
+        public IEnumerable<TicketModel> GetTicket(int PassengerId,int BookingId,int TrainId)
         {
-            Tickets Ticket = null;
-            try
-            {
-                Ticket = _TicketDb.tickets.Find(TicketId);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return Ticket;
+           
+            List<TicketModel> Result;
+           
+                 Result = (from p in trainDb.passenger
+                              join b in trainDb.bookings on p.PassengerId equals b.PassengerId
+                              join t in trainDb.trains on b.TrainId equals t.TrainId
+                              select new TicketModel
+                              {
+                                  TrainId = t.TrainId,
+                                  Name = t.Name,
+                                  ArrivalTime = t.ArrivalTime,
+                                  DepartureTime = t.DepartureTime,
+                                  ArrivalDate = t.ArrivalDate,
+                                  DepartureDate = t.DepartureDate,
+                                  ArrivalStation = t.ArrivalStation,
+                                  DepartureStation=t.DepartureStation,
+                                  BookingId=b.BookingId,
+                                  fare=b.fare,
+                                  Status=b.Status,
+                                  SeatNum=b.SeatNum,
+                                  PassengerId = p.PassengerId,
+                                  PName = p.PName,
+                                  Age = p.Age,
+                                  gender = p.gender,
+                                  Class = p.Class,
+                              }).Where(q=>q.PassengerId==PassengerId && q.BookingId==BookingId && q.TrainId==TrainId).ToList();
+              
+            
+          
+            return Result;
         }
         #endregion
 
@@ -100,13 +64,14 @@ namespace RailwaySystem.API.Repository
         /// </summary>
         /// <param name="Ticket"></param>
         /// <returns></returns>
-        public string SaveTicket(Tickets Ticket)
+        public string SaveTicket(int PassengerId, int BookingId, int TrainId)
         {
             string stCode = string.Empty;
             try
             {
-                _TicketDb.tickets.Add(Ticket);
-                _TicketDb.SaveChanges();
+                trainDb.tickets.Add(new Tickets { TrainId = TrainId, PassengerId = PassengerId, BookingId = BookingId });
+               
+                trainDb.SaveChanges();
                 stCode = "200";
             }
             catch (Exception ex)
@@ -119,28 +84,6 @@ namespace RailwaySystem.API.Repository
        
         #endregion
 
-        #region UpdateTicket
-        /// <summary>
-        /// When this function is invoked we will be able to Update Ticket details
-        /// </summary>
-        /// <param name="Ticket"></param>
-        /// <returns>Updated Ticket Details</returns>
-        public string UpdateTicket(Tickets Ticket)
-        {
-            string stCode = string.Empty;
-            try
-            {
-                _TicketDb.Entry(Ticket).State = EntityState.Modified;
-                _TicketDb.SaveChanges();
-                stCode = "200";
-            }
-            catch
-            {
-                stCode = "400";
-            }
-            return stCode;
 
-        }
-        #endregion
     }
 }

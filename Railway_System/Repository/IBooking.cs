@@ -10,7 +10,7 @@ namespace RailwaySystem.API.Repository
     {
         public string SaveBooking(Booking booking);
         public string UpdateBooking(Booking booking);
-        public string DeactBooking(int BookingId);
+        public string DeactBooking(int BookingId, int TrainId);
         public Booking ConfirmBooking(int BookingId);
         public IEnumerable<Booking> GetBookingByUserID(int UserId);
         public int GetBookingId(int PassengerId);

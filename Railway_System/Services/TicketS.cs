@@ -14,25 +14,15 @@ namespace RailwaySystem.API.Services
         {
             _ITicket = ITicket;
         }
-        public string SaveTicket(Tickets Ticket)
+        public string SaveTicket(int PassengerId, int BookingId, int TrainId)
         {
-            return _ITicket.SaveTicket(Ticket);
+            return _ITicket.SaveTicket(PassengerId, BookingId, TrainId);
         }
-        public string DeactTicket(int TicketId)
+
+        public IEnumerable<TicketModel> GetTicket(int PassengerId, int BookingId, int TrainId)
         {
-            return _ITicket.DeactTicket(TicketId);
-        }
-        public string UpdateTicket(Tickets Ticket)
-        {
-            return _ITicket.UpdateTicket(Ticket);
-        }
-        public Tickets GetTicket(int TicketId)
-        {
-            return _ITicket.GetTicket(TicketId);
-        }
-        public List<Tickets> GetAllTickets()
-        {
-            return _ITicket.GetAllTickets();
+            return _ITicket.GetTicket(PassengerId,BookingId,TrainId);
         }
     }
 }
+

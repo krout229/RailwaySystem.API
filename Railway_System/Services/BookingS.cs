@@ -18,9 +18,9 @@ namespace RailwaySystem.API.Services
         {
             return _Ibooking.SaveBooking(Booking);
         }
-        public string DeactBooking(int BookingId)
+        public string DeactBooking(int BookingId, int TrainId)
         {
-            return _Ibooking.DeactBooking(BookingId);
+            return _Ibooking.DeactBooking(BookingId, TrainId);
         }
         public string UpdateBooking(Booking Booking)
         {

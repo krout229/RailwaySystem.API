@@ -65,7 +65,8 @@ namespace RailwaySystem.API.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserId", user.UserId.ToString(), "Email", user.Email)
+                       new Claim("UserId", user.UserId.ToString()),
+                       new Claim("Email", user.Email.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddHours(12),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("55f6UmNJfrbdi8It")), SecurityAlgorithms.HmacSha256Signature)
@@ -88,16 +89,16 @@ namespace RailwaySystem.API.Controllers
 
         public IActionResult SendEmail(string name, string reciever)
         {
-            string body = "Hello, " + name + ".Your email id " + reciever + " is succesfully registered with LOCOMOTIVE Railway Services";
+            string body = "Hello, " + name + ".Your email id " + reciever + " is succesfully registered with Trainspeenic Railway Services";
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse("system.railwayinfo@gmail.com"));
+            email.From.Add(MailboxAddress.Parse("trainspleenic@gmail.com"));
             email.To.Add(MailboxAddress.Parse(reciever));
             email.Subject = "Test WEBAPI Email Sending Service";
             email.Body = new TextPart(TextFormat.Plain) { Text = body };
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate("system.railwayinfo@gmail.com ", "ruxidhbnmxoyoynz");
+            smtp.Authenticate("trainspleenic@gmail.com ", "jurkcwrlpaffpfhn");
             smtp.Send(email);
             smtp.Disconnect(true);
 

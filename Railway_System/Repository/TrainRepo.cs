@@ -184,7 +184,7 @@ namespace RailwaySystem.API.Repository
         public IEnumerable<SearchTrainModel> GetTrains2(string ArrivalStation, string DepartureStation, DateTime date)
         {
             var Result = (from t in _trainDb.trains
-                          join s in _trainDb.seat on t.TrainId equals s.TrainId
+                          join s in _trainDb.seat on t.TrainId equals s.TrainId 
                           select new SearchTrainModel
                           {
                               TrainId = t.TrainId,

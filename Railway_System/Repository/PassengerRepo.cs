@@ -113,10 +113,12 @@ namespace RailwaySystem.API.Repository
             }
             return passengers;
         }
+
+        #region Report
         public IEnumerable<Report> GetReport(int TrainId)
         {
             var Result = (from p in trainDb.passenger
-                          join b in trainDb.bookings on p.PassengerId equals b.PassengerId where b.TrainId==TrainId
+                          join b in trainDb.bookings on p.PassengerId equals b.PassengerId where b.TrainId==TrainId 
                           select new Report
                           {
                               PassengerId = p.PassengerId,
@@ -132,6 +134,55 @@ namespace RailwaySystem.API.Repository
                           }).ToList();
             return Result;
         }
+        #endregion
+
+        #region
+        public IEnumerable<Report> GetReportStat(int TrainId,string Status)
+        {
+            List<Report> Result;
+            if (Status == "All")
+            {
+                 Result = (from p in trainDb.passenger
+                              join b in trainDb.bookings on p.PassengerId equals b.PassengerId
+                              where b.TrainId == TrainId
+                              select new Report
+                              {
+                                  PassengerId = p.PassengerId,
+                                  PName = p.PName,
+                                  Age = p.Age,
+                                  gender = p.gender,
+                                  Class = p.Class,
+                                  BookingId = b.BookingId,
+                                  fare = b.fare,
+                                  Date = b.Date,
+                                  Status = b.Status,
+                                  SeatNum = b.SeatNum
+                              }).ToList();
+               
+            }
+            else
+            {
+                 Result = (from p in trainDb.passenger
+                              join b in trainDb.bookings on p.PassengerId equals b.PassengerId
+                              where b.TrainId == TrainId
+                              select new Report
+                              {
+                                  PassengerId = p.PassengerId,
+                                  PName = p.PName,
+                                  Age = p.Age,
+                                  gender = p.gender,
+                                  Class = p.Class,
+                                  BookingId = b.BookingId,
+                                  fare = b.fare,
+                                  Date = b.Date,
+                                  Status = b.Status,
+                                  SeatNum = b.SeatNum
+                              }).Where(q => q.Status == Status).ToList();
+                
+            }
+            return Result;
+        }
+        #endregion
 
     }
 }

@@ -24,9 +24,9 @@ namespace RailwaySystem.API.Controllers
             return Ok(_bookingS.SaveBooking(Booking));
         }
         [HttpDelete("DeleteBooking")]
-        public IActionResult DeactBooking(int BookingId)
+        public IActionResult DeactBooking(int BookingId, int TrainId)
         {
-            return Ok(_bookingS.DeactBooking(BookingId));
+            return Ok(_bookingS.DeactBooking(BookingId,TrainId));
         }
         [HttpPut("UpdateBooking")]
         public IActionResult UpdateBooking(Booking Booking)
